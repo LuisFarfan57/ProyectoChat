@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".CrearUsuario" />
+        <activity android:name=".ListaChats" />
+        <activity android:name=".ChatIndividual"></activity>
     </application>
 
 </manifest>
