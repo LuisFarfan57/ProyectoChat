@@ -11,9 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="369dp">
 
+        <TextView
+            android:id="@+id/txtUsuarioReceptor"
+            android:layout_width="145dp"
+            android:layout_height="47dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="22dp"
+            android:text="Usuario Receptor" />
+
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="292dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="10dp">
+
+        </ListView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -29,7 +43,9 @@
             android:layout_marginStart="44dp"
             android:layout_marginTop="20dp"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="44dp" />
 
         <Button
             android:id="@+id/btnEnviar"
@@ -38,7 +54,8 @@
             android:layout_alignEnd="@+id/txtMensaje"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
-            android:text="Enviar" />
+            android:text="Enviar"
+            android:layout_alignRight="@+id/txtMensaje" />
 
         <Button
             android:id="@+id/btnActualizar"
@@ -46,7 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/txtMensaje"
             android:layout_alignTop="@+id/btnEnviar"
-            android:text="Actualizar" />
+            android:text="Actualizar"
+            android:layout_alignLeft="@+id/txtMensaje" />
 
         <Button
             android:id="@+id/btnArchivo"
@@ -55,7 +73,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/btnEnviar"
             android:layout_marginEnd="128dp"
-            android:text="Archivo" />
+            android:text="Archivo"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="128dp" />
     </RelativeLayout>
 
 </LinearLayout>
