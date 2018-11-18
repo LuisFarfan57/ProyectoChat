@@ -34,7 +34,7 @@ exports.mensajeIndividual_contenido = function (req, res) {
     })
 };
 exports.mensaje_update = function (req, res) {
-    Mensaje.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, product) {
+    Mensaje.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, message) {
         if (err) return next(err);
         res.send('Message udpated.');
     });

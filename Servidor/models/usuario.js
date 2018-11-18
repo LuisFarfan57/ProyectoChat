@@ -9,9 +9,7 @@ const UserSchema = new Schema({
   nombre: String,
   apellido: String,
   correo: String,
-  password: { type: String, select: false },
-  signupDate: { type: Date, default: Date.now() },
-  lastLogin: Date
+  password: { type: String }
 })
 
 module.exports = mongoose.model('User', UserSchema)

@@ -20,7 +20,7 @@ function signUp (req, res) {
 }
 
 function signIn (req, res) {
-  User.find({ email: req.body.email }, (err, user) => {
+  User.find({ usuario: req.body.usuario }, (err, user) => {
     if (err) return res.status(500).send({ message: err })
     if (!user) return res.status(404).send({ message: 'No existe el usuario' })
 
@@ -31,8 +31,22 @@ function signIn (req, res) {
     })
   })
 }
+function usuarios_contenido (req, res) {
+  User.find({}, function (err, users) {
+      if (err) return next(err);
+      res.send(users);
+  })
+};
+function usuarioIndividual_contenido (req, res) {
+  User.find({Id:req.params.Id}, function (err, usuario) {
+      if (err) return next(err);
+      res.send(usuario);
+  })
+};
 
 module.exports = {
   signUp,
-  signIn
+  signIn,
+  usuarios_contenido,
+  usuarioIndividual_contenido
 }
