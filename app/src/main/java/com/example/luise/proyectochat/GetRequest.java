@@ -1,22 +1,49 @@
 package com.example.luise.proyectochat;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class GetRequest extends AsyncTask<String,Void,String>{
-    public String Resultado;
+    public String Resultado="";
+    ProgressDialog progressDialog;
+    public Context contexto;
+    public ArrayList<Usuario> listaUsuarios;
+    public boolean Terminado=false;
+
+    public void setContexto(Context c){
+        contexto=c;
+    }
+    @Override
+    protected void onPreExecute() {
+        progressDialog = new ProgressDialog(contexto);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
+        listaUsuarios=new ArrayList<>();
+    }
+
     @Override
     protected String doInBackground(String[] params) {
 
 
         try {
             Resultado=getData(params[0].toString());
+            Type tipoListaUsuarios = new TypeToken<ArrayList<Usuario>>(){}.getType();
+            Gson gson = new Gson();
+            listaUsuarios= gson.fromJson(Resultado, tipoListaUsuarios);
+            Terminado=true;
             return Resultado;
         } catch (IOException ex) {
             return "Network error !";
@@ -26,6 +53,12 @@ public class GetRequest extends AsyncTask<String,Void,String>{
 
     @Override
     protected void onPostExecute(String o) {
+
+        //cancel progress dialog
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
         super.onPostExecute(o.toString());
     }
     private String getData(String urlPath) throws IOException {

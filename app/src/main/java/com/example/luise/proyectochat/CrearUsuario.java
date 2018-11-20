@@ -53,7 +53,7 @@ public class CrearUsuario extends AppCompatActivity {
                 Usuario usuarioNuevo=new Usuario(txtNombre.getText().toString(),txtApellido.getText().toString(),txtCorreo.getText().toString(),txtUsuario.getText().toString(),txtClave.getText().toString());
                 PostRequest nuevoRequest=new PostRequest();
                 nuevoRequest.user=usuarioNuevo;
-                nuevoRequest.execute("http://192.168.1.4:1234/usuarios/signup");
+                nuevoRequest.execute("http://10.200.184.25:1234/usuarios/signup");
                 Toast.makeText(CrearUsuario.this,"Usuario Creado", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnRegresar:

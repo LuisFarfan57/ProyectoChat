@@ -1,5 +1,8 @@
 package com.example.luise.proyectochat;
 
+import android.app.Application;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
@@ -18,8 +21,24 @@ import java.net.URL;
 public class PostRequest extends AsyncTask<String, Void, String>{
 
     public Usuario user=new Usuario("","","","","");
+    public Mensaje mensaje=new Mensaje("","","","");
     String retorno="";
     String path;
+    ProgressDialog progressDialog;
+    public Context contexto;
+
+    public void setContexto(Context c){
+        contexto=c;
+    }
+
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog = new ProgressDialog(contexto);
+        progressDialog.setMessage("Loading data...");
+        progressDialog.show();
+    }
+
     @Override
     protected String doInBackground(String... strings) {
         try {

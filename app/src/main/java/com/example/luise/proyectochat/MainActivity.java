@@ -2,12 +2,17 @@ package com.example.luise.proyectochat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -40,11 +46,15 @@ public class MainActivity extends AppCompatActivity {
     EditText txtcontraseña;
     @BindView(R.id.textView5)
     TextView textView5;
+    GetRequest nuevaRequest=new GetRequest();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        nuevaRequest.setContexto(MainActivity.this);
+        nuevaRequest.execute("http://10.200.184.25:1234/usuarios/getusuarios");
         ButterKnife.bind(this);
     }
 
@@ -71,25 +81,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public boolean VerificarUsuario(String user,String password) {
         boolean UsuarioVerificado=false;
-        GetRequest nuevaRequest=new GetRequest();
-        final Type tipoListaUsuarios = new TypeToken<List<Usuario>>(){}.getType();
-        Gson gson = new Gson();
-      //  Type type = new TypeToken<Usuario[]>() {}.getType();
-        nuevaRequest.execute("http://192.168.1.4:1234/usuarios/getusuarios");
-        String res=nuevaRequest.Resultado;
-        res=res.replaceAll(",\"__v\":0","");
-      //  res="{ \"usuario\":"+res+"}";
-        if(res!=""){
-             List<Usuario> listaUsuarios = gson.fromJson(res, tipoListaUsuarios);
-            for (int i=0;i<listaUsuarios.size();i++){
-                if(listaUsuarios.get(i).getUsuario().equals(user)&&listaUsuarios.get(i).getContraseña().equals(password)){
-                    UsuarioVerificado=true;
-                }
-            }
-        }
-        else{
-            Toast.makeText(MainActivity.this,"Error de auntenticacion", Toast.LENGTH_SHORT).show();
-        }
+
+
+          if(nuevaRequest.Terminado!=false){
+              for (int i=0;i<nuevaRequest.listaUsuarios.size();i++){
+                  if(nuevaRequest.listaUsuarios.get(i).getUsuario().equals(user)&&nuevaRequest.listaUsuarios.get(i).getContraseña().equals(password)){
+                      UsuarioVerificado=true;
+                  }
+              }
+          }
         return UsuarioVerificado;
     }
 
