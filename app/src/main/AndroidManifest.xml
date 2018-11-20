@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.luise.proyectochat">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -19,7 +20,8 @@
         </activity>
         <activity android:name=".CrearUsuario" />
         <activity android:name=".ListaChats" />
-        <activity android:name=".ChatIndividual"></activity>
+        <activity android:name=".ChatIndividual" />
+        <activity android:name=".SplashActivity"></activity>
     </application>
 
 </manifest>
