@@ -1,102 +1,71 @@
 package com.example.luise.proyectochat;
 
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
-public class PostRequest extends AsyncTask<String, Void, String>{
-
-    public Usuario user=new Usuario("","","","","");
-    public Mensaje mensaje=new Mensaje("","","","");
-    String retorno="";
-    String path;
+public class GetRequestMensaje extends AsyncTask<String,Void,String> {
+    public String Resultado="";
     ProgressDialog progressDialog;
     public Context contexto;
-
+    public ArrayList<Mensaje> listaMensajes;
+    public boolean llenarListaChats=false;
     public void setContexto(Context c){
         contexto=c;
     }
-
-
     @Override
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(contexto);
-        progressDialog.setMessage("Creando Usuario");
+        progressDialog.setMessage("Loading data...");
         progressDialog.show();
+        listaMensajes=new ArrayList<>();
     }
 
     @Override
     protected String doInBackground(String... strings) {
         try {
-            retorno=postData(strings[0]);
-            path=strings[0];
-            return postData(strings[0]);
-
+            Resultado=getData(strings[0].toString());
+            Type tipoListaMensajes= new TypeToken<ArrayList<Mensaje>>(){}.getType();
+            Gson gson = new Gson();
+            listaMensajes= gson.fromJson(Resultado, tipoListaMensajes);
+            return Resultado;
         } catch (IOException ex) {
-            retorno="Network error !";
             return "Network error !";
-        } catch (JSONException ex) {
-            retorno="Data Invalid";
-            return "Data Invalid !";
         }
     }
 
     @Override
     protected void onPostExecute(String s) {
-
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
         super.onPostExecute(s);
     }
-
-
-    private String postData(String urlPath) throws IOException, JSONException {
-
+    private String getData(String urlPath) throws IOException {
         StringBuilder result = new StringBuilder();
-        BufferedWriter bufferedWriter = null;
-        BufferedReader bufferedReader = null;
+        BufferedReader bufferedReader =null;
 
         try {
-            //Create data to send to server
-            JSONObject dataToSend = new JSONObject();
-                //post usuario
-                dataToSend.put("nombre", user.getNombre());
-                dataToSend.put("apellido", user.getApellido());
-                dataToSend.put("correo", user.getCorreo());
-                dataToSend.put("usuario", user.getUsuario());
-                dataToSend.put("password", user.getContraseña());
-
-
-            //Initialize and config request, then connect to server.
+            //Initialize and config request, then connect to server
             URL url = new URL(urlPath);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(10000 /* milliseconds */);
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setDoOutput(true);  //enable output (body data)
+            urlConnection.setRequestMethod("GET");
             urlConnection.setRequestProperty("Content-Type", "application/json");// set header
             urlConnection.connect();
-
-            //Write data into server
-            OutputStream outputStream = urlConnection.getOutputStream();
-            bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bufferedWriter.write(dataToSend.toString());
-            bufferedWriter.flush();
 
             //Read data response from server
             InputStream inputStream = urlConnection.getInputStream();
@@ -105,16 +74,13 @@ public class PostRequest extends AsyncTask<String, Void, String>{
             while ((line = bufferedReader.readLine()) != null) {
                 result.append(line).append("\n");
             }
+
         } finally {
             if (bufferedReader != null) {
                 bufferedReader.close();
-            }
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
             }
         }
 
         return result.toString();
     }
-
 }

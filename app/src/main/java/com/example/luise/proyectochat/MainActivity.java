@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txtcontraseña;
     @BindView(R.id.textView5)
     TextView textView5;
-    GetRequest nuevaRequest=new GetRequest();
+    static GetRequest nuevaRequest=new GetRequest();
 
 
     @Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         nuevaRequest.setContexto(MainActivity.this);
-        nuevaRequest.execute("http://10.200.184.25:1234/usuarios/getusuarios");
+        nuevaRequest.execute("http://192.168.1.16:1234/usuarios/getusuarios");
         ButterKnife.bind(this);
     }
 
@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnIngresar:
                 String usuario=txtUsuario.getText().toString();
                 String contraseña=txtcontraseña.getText().toString();
-               if(VerificarUsuario(usuario,contraseña)){
-                  // Intent SalaChat = new Intent(getApplicationContext(), ListaChats.class);
-                   //startActivity(SalaChat);
-                   Toast.makeText(MainActivity.this,"to bien", Toast.LENGTH_SHORT).show();
+               if(Verificacion.VerificarUsuario(usuario,contraseña,nuevaRequest.listaUsuarios)){
+
+                  Intent SalaChat = new Intent(getApplicationContext(), ListaChats.class);
+                   startActivity(SalaChat);
                }else{
                    Toast.makeText(MainActivity.this,"Error de auntenticacion, Usuario o contraseña invalidos", Toast.LENGTH_SHORT).show();
                }
@@ -79,18 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-    public boolean VerificarUsuario(String user,String password) {
-        boolean UsuarioVerificado=false;
 
-
-          if(nuevaRequest.Terminado!=false){
-              for (int i=0;i<nuevaRequest.listaUsuarios.size();i++){
-                  if(nuevaRequest.listaUsuarios.get(i).getUsuario().equals(user)&&nuevaRequest.listaUsuarios.get(i).getContraseña().equals(password)){
-                      UsuarioVerificado=true;
-                  }
-              }
-          }
-        return UsuarioVerificado;
-    }
 
 }

@@ -20,7 +20,7 @@ function signUp (req, res) {
 }
 
 function signIn (req, res) {
-  User.find({ usuario: req.body.usuario }, (err, user) => {
+  User.find({ usuario: req.body.usuario, password: req.body.password }, (err, user) => {
     if (err) return res.status(500).send({ message: err })
     if (!user) return res.status(404).send({ message: 'No existe el usuario' })
 

@@ -3,6 +3,7 @@ package com.example.luise.proyectochat;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +22,8 @@ public class GetRequest extends AsyncTask<String,Void,String>{
     ProgressDialog progressDialog;
     public Context contexto;
     public ArrayList<Usuario> listaUsuarios;
-    public boolean Terminado=false;
+    public boolean LlenarListaChats=false;
+    ArrayAdapter<Usuario> adaptador;
 
     public void setContexto(Context c){
         contexto=c;
@@ -43,7 +45,9 @@ public class GetRequest extends AsyncTask<String,Void,String>{
             Type tipoListaUsuarios = new TypeToken<ArrayList<Usuario>>(){}.getType();
             Gson gson = new Gson();
             listaUsuarios= gson.fromJson(Resultado, tipoListaUsuarios);
-            Terminado=true;
+            if(LlenarListaChats){
+                adaptador=new ArrayAdapter<Usuario>(contexto,android.R.layout.simple_list_item_1,listaUsuarios);
+            }
             return Resultado;
         } catch (IOException ex) {
             return "Network error !";

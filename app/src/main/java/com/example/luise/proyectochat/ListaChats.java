@@ -20,23 +20,12 @@ public class ListaChats extends AppCompatActivity {
 
     @BindView(R.id.listChats)
     ListView listChats;
-
+    GetRequest GetUsuarios=new GetRequest();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        GetRequest nuevaRequest=new GetRequest();
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<Usuario>>() {}.getType();
-        nuevaRequest.execute("http://192.168.1.4:1234/usuarios/getusuarios");
-        ArrayList<Usuario> listaUsuarios=new ArrayList<>();
-        String res=nuevaRequest.Resultado;
-        if(res!=""){
-            listaUsuarios=gson.fromJson(res,type);
-            ArrayAdapter<Usuario> adapter = new ArrayAdapter<Usuario>(this, android.R.layout.activity_list_item,listaUsuarios);
-            listChats.setAdapter(adapter);
-        }
-        else{
-            Toast.makeText(ListaChats.this,"Error de carga", Toast.LENGTH_SHORT).show();
-        }
+        GetUsuarios.setContexto(ListaChats.this);
+        GetUsuarios.execute("http://192.168.1.16:1234/usuarios/getusuarios");
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_chats);
