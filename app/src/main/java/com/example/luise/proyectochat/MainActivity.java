@@ -64,8 +64,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnIngresar:
                 String usuario=txtUsuario.getText().toString();
                 String contraseña=txtcontraseña.getText().toString();
+                Contantes.listaChats.addAll(nuevaRequest.listaUsuarios);
                if(Verificacion.VerificarUsuario(usuario,contraseña,nuevaRequest.listaUsuarios)){
-
+                    Contantes.usuarioenSesion=usuario;
                   Intent SalaChat = new Intent(getApplicationContext(), ListaChats.class);
                    startActivity(SalaChat);
                }else{

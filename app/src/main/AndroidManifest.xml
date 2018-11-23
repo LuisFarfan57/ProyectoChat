@@ -21,7 +21,8 @@
         <activity android:name=".CrearUsuario" />
         <activity android:name=".ListaChats" />
         <activity android:name=".ChatIndividual" />
-        <activity android:name=".SplashActivity"></activity>
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".ChatItem"></activity>
     </application>
 
 </manifest>

@@ -1,10 +1,25 @@
 package com.example.luise.proyectochat;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Mensaje {
+    @SerializedName("_id")
+    private String _id;
+    @SerializedName("Emisor")
     private String emisor;
+    @SerializedName("Receptor")
     private String receptor;
+    @SerializedName("Contenido")
     private String contenido;
+    @SerializedName("Tipo")
     private String tipo;
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getEmisor() {
         return emisor;

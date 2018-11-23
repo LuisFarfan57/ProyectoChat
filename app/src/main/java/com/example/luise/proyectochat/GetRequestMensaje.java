@@ -21,7 +21,6 @@ public class GetRequestMensaje extends AsyncTask<String,Void,String> {
     ProgressDialog progressDialog;
     public Context contexto;
     public ArrayList<Mensaje> listaMensajes;
-    public boolean llenarListaChats=false;
     public void setContexto(Context c){
         contexto=c;
     }

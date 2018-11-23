@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtNombreReceptor"
+        android:layout_width="85dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="97dp"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:textSize="14sp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="97dp" />
+
+    <TextView
+        android:id="@+id/idConversacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/txtNombreReceptor"
+        android:layout_marginTop="63dp"
+        android:text="Abrir Conversación"
+        android:layout_alignLeft="@+id/txtNombreReceptor" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="64dp"
+        android:layout_height="67dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/txtNombreReceptor"
+        android:layout_marginStart="16dp"
+        app:srcCompat="@mipmap/usuarblu"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp" />
+
+</RelativeLayout>
