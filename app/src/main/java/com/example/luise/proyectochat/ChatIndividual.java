@@ -55,6 +55,7 @@ public class ChatIndividual extends AppCompatActivity {
                         }
                     }
                 }
+                txtUsuarioReceptor.setText(Contantes.usuarioConversacion);
                 adapter = new ItemAdapterMensaje(this, actualConversacion);
                 listChat.setAdapter(adapter);
                 break;

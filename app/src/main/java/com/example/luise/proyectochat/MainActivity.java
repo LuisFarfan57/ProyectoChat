@@ -46,15 +46,16 @@ public class MainActivity extends AppCompatActivity {
     EditText txtcontraseña;
     @BindView(R.id.textView5)
     TextView textView5;
-    static GetRequest nuevaRequest=new GetRequest();
+ GetRequest nuevaRequest;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        nuevaRequest=new GetRequest();
         setContentView(R.layout.activity_main);
         nuevaRequest.setContexto(MainActivity.this);
-        nuevaRequest.execute("http://192.168.1.16:1234/usuarios/getusuarios");
+        nuevaRequest.execute("http://192.168.1.8:1234/usuarios/getusuarios");
         ButterKnife.bind(this);
     }
 

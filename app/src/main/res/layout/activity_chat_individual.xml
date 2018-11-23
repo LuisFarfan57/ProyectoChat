@@ -52,11 +52,13 @@
             android:id="@+id/btnEnviar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/txtMensaje"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="20dp"
+            android:layout_marginEnd="39dp"
             android:text="Enviar"
-            android:layout_alignRight="@+id/txtMensaje" />
+            android:layout_marginRight="39dp"
+            android:layout_alignParentRight="true" />
 
         <Button
             android:id="@+id/btnActualizar"
@@ -73,10 +75,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/btnEnviar"
-            android:layout_marginEnd="128dp"
+            android:layout_marginEnd="135dp"
             android:text="Archivo"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="128dp" />
+            android:layout_marginRight="135dp" />
     </RelativeLayout>
 
 </LinearLayout>

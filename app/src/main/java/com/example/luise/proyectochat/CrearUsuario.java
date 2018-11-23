@@ -42,7 +42,7 @@ public class CrearUsuario extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         RequestGet.setContexto(CrearUsuario.this);
-        RequestGet.execute("http://192.168.1.16:1234/usuarios/getusuarios");
+        RequestGet.execute("http://192.168.1.8:1234/usuarios/getusuarios");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario);
         ButterKnife.bind(this);
@@ -54,16 +54,23 @@ public class CrearUsuario extends AppCompatActivity {
             case R.id.btnCrear:
                 Date fecha=new Date();
                 Usuario usuarioNuevo=new Usuario(txtNombre.getText().toString(),txtApellido.getText().toString(),txtCorreo.getText().toString(),txtUsuario.getText().toString(),txtClave.getText().toString());
-                if(!Verificacion.VerificarUsuarioExistente(usuarioNuevo.getUsuario(),RequestGet.listaUsuarios)){
-                    PostRequest nuevoRequest=new PostRequest();
-                    nuevoRequest.user=usuarioNuevo;
-                    nuevoRequest.setContexto(CrearUsuario.this);
-                    nuevoRequest.execute("http://192.168.1.16:1234/usuarios/signup");
-                    Toast.makeText(CrearUsuario.this,"Usuario Creado", Toast.LENGTH_SHORT).show();
+                if(txtNombre.getText().equals("")||txtApellido.getText().equals("")||txtClave.getText().equals("")||txtCorreo.getText().equals("")||txtUsuario.getText().equals("")){
+                    Toast.makeText(CrearUsuario.this,"No puede dejar ningun campo vacio", Toast.LENGTH_SHORT).show();
+
                 }
                 else{
-                    Toast.makeText(CrearUsuario.this,"Usuario Existente", Toast.LENGTH_SHORT).show();
+                    if(!Verificacion.VerificarUsuarioExistente(usuarioNuevo.getUsuario(),RequestGet.listaUsuarios)){
+                        PostRequest nuevoRequest=new PostRequest();
+                        nuevoRequest.user=usuarioNuevo;
+                        nuevoRequest.setContexto(CrearUsuario.this);
+                        nuevoRequest.execute("http://192.168.1.8:1234/usuarios/signup");
+                        Toast.makeText(CrearUsuario.this,"Usuario Creado", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(CrearUsuario.this,"Usuario Existente", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
 
                 break;
             case R.id.btnRegresar:

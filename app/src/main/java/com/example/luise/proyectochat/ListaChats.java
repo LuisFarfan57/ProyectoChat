@@ -26,6 +26,8 @@ public class ListaChats extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_chats);
         ButterKnife.bind(this);
+        adapter = new ItemAdapter(this, Contantes.listaChats);
+        listChats.setAdapter(adapter);
         listChats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -34,7 +36,7 @@ public class ListaChats extends AppCompatActivity  {
 
                 Contantes.usuarioConversacion=itemval.getUsuario();
                 getMensaje.setContexto(ListaChats.this);
-                getMensaje.execute("http://192.168.1.16:1234/mensajes/allmensajes");
+                getMensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
                 Intent SalaChat = new Intent(getApplicationContext(), ChatIndividual.class);
                 startActivity(SalaChat);
 
@@ -44,11 +46,8 @@ public class ListaChats extends AppCompatActivity  {
         });
     }
 
-    @OnClick(R.id.btnCargar)
-    public void onViewClicked() {
-
-        adapter = new ItemAdapter(this, Contantes.listaChats);
-        listChats.setAdapter(adapter);
-    }
-
+public void LlenarListView(){
+    adapter = new ItemAdapter(this, Contantes.listaChats);
+    listChats.setAdapter(adapter);
+}
 }
