@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         nuevaRequest=new GetRequest();
         setContentView(R.layout.activity_main);
         nuevaRequest.setContexto(MainActivity.this);
-        nuevaRequest.execute("http://192.168.1.8:1234/usuarios/getusuarios");
+        nuevaRequest.execute("http://192.168.0.13:1234/usuarios/getusuarios");
         ButterKnife.bind(this);
     }
 
