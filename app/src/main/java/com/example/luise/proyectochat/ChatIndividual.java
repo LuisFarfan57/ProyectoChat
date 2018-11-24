@@ -57,10 +57,10 @@ public class ChatIndividual extends AppCompatActivity {
                    tipo="archivo";
                    try{
                        contenido = Lector.LeerArchivo(this.getApplication(), uri);
+                       nombreArchivo = Lector.obtenerNombreDeArchivoDeUri(this.getApplication(), uri);
                    }catch (Exception e){
-
+                       Toast.makeText(ChatIndividual.this,"No se pudo leer el archivo", Toast.LENGTH_LONG).show();
                    }
-                   nombreArchivo="";
                 }
                 else{
                     txtMensaje.setEnabled(true);
@@ -70,28 +70,31 @@ public class ChatIndividual extends AppCompatActivity {
 
                 if(contenido != ""){
                     Mensaje message=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,contenido,tipo);
+                    Mensaje messageTemp = new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,nombreArchivo,tipo);
                     enviar=new PostRequestMensaje();
                     Toast.makeText(ChatIndividual.this,"Mensaje Enviado", Toast.LENGTH_SHORT).show();
+                    message.setCodCifrado(Contantes.CodigoCifradoActual);
 
                     //primero muestra el mensaje en listview
                     if(!ArchivoCargado){
-                        message.setCodCifrado(Contantes.CodigoCifradoActual);
-                        message.setNombreArchivo(nombreArchivo);
+                        message.setNombreArchivo("");
+                        enviar.mensaje.setNombreArchivo("");
                         mensajesTemporal.add(message);
-                        adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
-                        listChat.setAdapter(adapter);
                         //despues envia el mensaje a la base de datos
                     }
                     else{
-
+                        message.setNombreArchivo(nombreArchivo);
+                        enviar.mensaje.setNombreArchivo(nombreArchivo);
+                        mensajesTemporal.add(messageTemp);
                     }
 
-                    enviar.mensaje=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,txtMensaje.getText().toString(),tipo);
-                    enviar.mensaje.setNombreArchivo(nombreArchivo);
+                    adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
+                    listChat.setAdapter(adapter);
+                    enviar.mensaje=message;
                     enviar.mensaje.setCodCifrado(Contantes.CodigoCifradoActual);
                     enviar.mensaje.setContenido(cifrar.Cifrar(contenido,Contantes.CodigoCifradoActual));
                     enviar.setContexto(ChatIndividual.this);
-                    enviar.execute("http://192.168.1.8:1234/mensajes/enviar");
+                    enviar.execute("http://192.168.0.13:1234/mensajes/enviar");
                     txtMensaje.setText("");
                     ArchivoCargado = false;
                 }
@@ -100,7 +103,7 @@ public class ChatIndividual extends AppCompatActivity {
                        mensaje=new GetRequestMensaje();
                         mensaje.setContexto(ChatIndividual.this);
                         try{
-                            mensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
+                            mensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
                         }catch(Exception e){
 
                             Toast.makeText(ChatIndividual.this,"Vuelva a interntalo en un momento", Toast.LENGTH_SHORT).show();
@@ -120,7 +123,10 @@ public class ChatIndividual extends AppCompatActivity {
                 if(mensaje.listaMensajes!=null){
                     for (int i=0;i<mensaje.listaMensajes.size();i++){
                         if ((mensaje.listaMensajes.get(i).getEmisor().equals(Contantes.usuarioenSesion) && mensaje.listaMensajes.get(i).getReceptor().equals(Contantes.usuarioConversacion)) || (mensaje.listaMensajes.get(i).getEmisor().equals(Contantes.usuarioConversacion) && mensaje.listaMensajes.get(i).getReceptor().equals(Contantes.usuarioenSesion))) {
-                            mensaje.listaMensajes.get(i).setContenido(cifrar.Descifrar(mensaje.listaMensajes.get(i).getContenido(),Contantes.CodigoCifradoActual));
+                            if(mensaje.listaMensajes.get(i).getTipo() == "normal"){
+                                mensaje.listaMensajes.get(i).setContenido(cifrar.Descifrar(mensaje.listaMensajes.get(i).getContenido(),Contantes.CodigoCifradoActual));
+                            }
+
                             actualConversacion.add(mensaje.listaMensajes.get(i));
                         }
                     }
