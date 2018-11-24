@@ -8,4 +8,5 @@ public class Contantes {
     public static String usuarioenSesion;
     public static String usuarioConversacion;
     public static List<Usuario> listaChats=new ArrayList<>();
+    public static int CodigoCifradoActual=0;
 }

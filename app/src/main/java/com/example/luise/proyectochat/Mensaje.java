@@ -13,6 +13,17 @@ public class Mensaje {
     private String contenido;
     @SerializedName("Tipo")
     private String tipo;
+    @SerializedName("codCifrado")
+    private int codCifrado;
+    public int getCodCifrado() {
+        return codCifrado;
+    }
+
+    public void setCodCifrado(int codCifrado) {
+        this.codCifrado = codCifrado;
+    }
+
+
     public String get_id() {
         return _id;
     }

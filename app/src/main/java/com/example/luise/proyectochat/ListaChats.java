@@ -2,6 +2,7 @@ package com.example.luise.proyectochat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,12 +23,17 @@ public class ListaChats extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getMensaje.setContexto(ListaChats.this);
+                getMensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
+            }
+        }, 1000);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_chats);
         ButterKnife.bind(this);
-        adapter = new ItemAdapter(this, Contantes.listaChats);
-        listChats.setAdapter(adapter);
+         LlenarListView();
         listChats.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -35,8 +41,37 @@ public class ListaChats extends AppCompatActivity  {
                 Usuario itemval = (Usuario) listChats.getItemAtPosition(position);
 
                 Contantes.usuarioConversacion=itemval.getUsuario();
-                getMensaje.setContexto(ListaChats.this);
-                getMensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
+                int CodigoCifrar=2;
+                int pos=0;
+                boolean codExitse=true;
+                if(getMensaje.listaMensajes.size()!=0){
+                    int ResultadoBusqueda=Verificacion.EncontrarChatCod(Contantes.usuarioenSesion,Contantes.usuarioConversacion,getMensaje.listaMensajes);
+                    if(ResultadoBusqueda!=0){
+                        Contantes.CodigoCifradoActual=ResultadoBusqueda;
+                    }else{
+                        while(codExitse){
+                            CodigoCifrar++;
+                            for (int x=0;x<getMensaje.listaMensajes.size();x++){
+
+                                if(CodigoCifrar==getMensaje.listaMensajes.get(x).getCodCifrado()){
+                                    codExitse=true;
+                                    break;
+                                }
+                                else{
+                                    codExitse=false;
+                                }
+                            }
+                        }
+                        Contantes.CodigoCifradoActual=CodigoCifrar;
+                    }
+                }
+                else{
+                    Contantes.CodigoCifradoActual=2;
+                }
+
+
+
+
                 Intent SalaChat = new Intent(getApplicationContext(), ChatIndividual.class);
                 startActivity(SalaChat);
 
@@ -47,6 +82,10 @@ public class ListaChats extends AppCompatActivity  {
     }
 
 public void LlenarListView(){
+    if(adapter!=null){
+        adapter.clear();
+        adapter.notifyDataSetChanged();
+    }
     adapter = new ItemAdapter(this, Contantes.listaChats);
     listChats.setAdapter(adapter);
 }

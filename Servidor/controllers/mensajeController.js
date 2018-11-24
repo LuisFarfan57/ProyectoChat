@@ -10,7 +10,8 @@ exports.mensaje_enviar = function (req, res) {
             Emisor: req.body.Emisor,
             Receptor: req.body.Receptor,
             Contenido: req.body.Contenido,
-            Tipo: req.body.Tipo
+            Tipo: req.body.Tipo,
+            codCifrado: req.body.codCifrado
         }
     );
 

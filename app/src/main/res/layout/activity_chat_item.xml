@@ -10,14 +10,14 @@
         android:id="@+id/txtContenidoM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="103dp"
         android:layout_marginStart="103dp"
         android:layout_marginTop="45dp"
         android:text="TextView"
-        android:textSize="8sp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="103dp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/txtUsuario"

@@ -1,9 +1,10 @@
 package com.example.luise.proyectochat;
 
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,11 +19,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class PostRequest extends AsyncTask<String, Void, String>{
-
-    public Usuario user=new Usuario("","","","","");
+public class PostRequestMensaje extends AsyncTask<String, Void, String> {
+    Mensaje mensaje=new Mensaje("","","","");
     String retorno="";
-    String path;
     ProgressDialog progressDialog;
     public Context contexto;
 
@@ -32,16 +31,11 @@ public class PostRequest extends AsyncTask<String, Void, String>{
 
 
     @Override
-    protected void onPreExecute() {
-        progressDialog = new ProgressDialog(contexto);
-        progressDialog.setMessage("Creando Usuario");
-        progressDialog.show();
-    }
-
-    @Override
     protected String doInBackground(String... strings) {
         try {
             retorno=postData(strings[0]);
+
+
             return retorno;
 
         } catch (IOException ex) {
@@ -52,17 +46,6 @@ public class PostRequest extends AsyncTask<String, Void, String>{
             return "Data Invalid !";
         }
     }
-
-    @Override
-    protected void onPostExecute(String s) {
-
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-        super.onPostExecute(s);
-    }
-
-
     private String postData(String urlPath) throws IOException, JSONException {
 
         StringBuilder result = new StringBuilder();
@@ -72,12 +55,13 @@ public class PostRequest extends AsyncTask<String, Void, String>{
         try {
             //Create data to send to server
             JSONObject dataToSend = new JSONObject();
-                //post usuario
-                dataToSend.put("nombre", user.getNombre());
-                dataToSend.put("apellido", user.getApellido());
-                dataToSend.put("correo", user.getCorreo());
-                dataToSend.put("usuario", user.getUsuario());
-                dataToSend.put("password", user.getContraseña());
+
+            //post mensaje
+            dataToSend.put("Emisor", mensaje.getEmisor());
+            dataToSend.put("Receptor",mensaje.getReceptor());
+            dataToSend.put("Contenido", mensaje.getContenido());
+            dataToSend.put("Tipo", mensaje.getTipo());
+            dataToSend.put("codCifrado", mensaje.getCodCifrado());
 
 
             //Initialize and config request, then connect to server.
@@ -114,5 +98,4 @@ public class PostRequest extends AsyncTask<String, Void, String>{
 
         return result.toString();
     }
-
 }

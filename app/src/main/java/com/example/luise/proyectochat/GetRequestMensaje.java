@@ -3,6 +3,11 @@ package com.example.luise.proyectochat;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.Layout;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,8 +26,12 @@ public class GetRequestMensaje extends AsyncTask<String,Void,String> {
     ProgressDialog progressDialog;
     public Context contexto;
     public ArrayList<Mensaje> listaMensajes;
+    public ArrayList<Mensaje> actualConversacion=new ArrayList<>();
+    ZigZag cifrar=new ZigZag();
+    ItemAdapterMensaje adapter;
+    boolean procesoTerminado=false;
     public void setContexto(Context c){
-        contexto=c;
+        this.contexto=c;
     }
     @Override
     protected void onPreExecute() {
@@ -39,8 +48,10 @@ public class GetRequestMensaje extends AsyncTask<String,Void,String> {
             Type tipoListaMensajes= new TypeToken<ArrayList<Mensaje>>(){}.getType();
             Gson gson = new Gson();
             listaMensajes= gson.fromJson(Resultado, tipoListaMensajes);
+            procesoTerminado=true;
             return Resultado;
         } catch (IOException ex) {
+            procesoTerminado=true;
             return "Network error !";
         }
     }
