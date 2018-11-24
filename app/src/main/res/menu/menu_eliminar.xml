@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/Eliminar"
+        android:title="Eliminar usuario"
+        android:orderInCategory="1"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/CerrarSesion"
+        android:title="Cerrar sesión"
+        android:orderInCategory="2"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/Salir"
+        android:title="Salir"
+        android:orderInCategory="3"
+        app:showAsAction="never"/>
+
+</menu>
