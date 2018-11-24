@@ -25,7 +25,6 @@ api.post('/private', (req, res,next) => {
     })
     .catch(response => {
       
-    res.status(response.status)
       res.send({ token: 'No Tienes autorizacion' })
     })
     

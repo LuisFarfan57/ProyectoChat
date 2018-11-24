@@ -60,7 +60,7 @@ public class Lector {
         {
 
             Log.e("Ficheros", "Error al leer fichero desde memoria interna");
-            return "Error,Error";
+            return "Error,123323478347834759837583457934797345";
         }
     }
 }

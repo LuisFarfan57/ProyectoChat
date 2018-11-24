@@ -43,7 +43,7 @@ public class CrearUsuario extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         RequestGet=new GetRequest();
         RequestGet.setContexto(CrearUsuario.this);
-        RequestGet.execute("http://192.168.0.13:1234/usuarios/getusuarios");
+        RequestGet.execute("http://192.168.1.8:1234/usuarios/getusuarios");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_usuario);
         ButterKnife.bind(this);
@@ -64,7 +64,7 @@ public class CrearUsuario extends AppCompatActivity {
                         PostRequest nuevoRequest=new PostRequest();
                         nuevoRequest.user=usuarioNuevo;
                         nuevoRequest.setContexto(CrearUsuario.this);
-                        nuevoRequest.execute("http://192.168.0.13:1234/usuarios/signup");
+                        nuevoRequest.execute("http://192.168.1.8:1234/usuarios/signup");
                         Toast.makeText(CrearUsuario.this,"Usuario Creado", Toast.LENGTH_SHORT).show();
                     }
                     else{

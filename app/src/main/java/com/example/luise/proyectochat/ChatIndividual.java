@@ -2,8 +2,10 @@ package com.example.luise.proyectochat;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -46,6 +48,7 @@ public class ChatIndividual extends AppCompatActivity {
         txtUsuarioReceptor.setText(Contantes.usuarioConversacion);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @OnClick({R.id.btnEnviar, R.id.btnActualizar, R.id.btnArchivo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -94,7 +97,7 @@ public class ChatIndividual extends AppCompatActivity {
                     enviar.mensaje.setCodCifrado(Contantes.CodigoCifradoActual);
                     enviar.mensaje.setContenido(cifrar.Cifrar(contenido,Contantes.CodigoCifradoActual));
                     enviar.setContexto(ChatIndividual.this);
-                    enviar.execute("http://192.168.0.13:1234/mensajes/enviar");
+                    enviar.execute("http://192.168.1.8:1234/mensajes/enviar");
                     txtMensaje.setText("");
                     ArchivoCargado = false;
                 }
@@ -103,7 +106,7 @@ public class ChatIndividual extends AppCompatActivity {
                        mensaje=new GetRequestMensaje();
                         mensaje.setContexto(ChatIndividual.this);
                         try{
-                            mensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
+                            mensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
                         }catch(Exception e){
 
                             Toast.makeText(ChatIndividual.this,"Vuelva a interntalo en un momento", Toast.LENGTH_SHORT).show();

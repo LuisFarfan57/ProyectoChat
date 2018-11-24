@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".SplashActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="245dp"
-        android:layout_height="304dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_launcher_background"
-        app:srcCompat="@drawable/ducki" />
-
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
@@ -24,4 +15,13 @@
         android:layout_marginTop="35dp"
         android:text="Patito Chat"
         android:textSize="36sp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="171dp"
+        app:srcCompat="@drawable/ducki" />
 </RelativeLayout>
