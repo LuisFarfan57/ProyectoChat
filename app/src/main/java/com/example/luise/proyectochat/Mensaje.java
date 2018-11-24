@@ -15,6 +15,18 @@ public class Mensaje {
     private String tipo;
     @SerializedName("codCifrado")
     private int codCifrado;
+
+    @SerializedName("nombreArchivo")
+    private String nombreArchivo;
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
     public int getCodCifrado() {
         return codCifrado;
     }

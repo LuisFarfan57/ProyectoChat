@@ -62,6 +62,7 @@ public class PostRequestMensaje extends AsyncTask<String, Void, String> {
             dataToSend.put("Contenido", mensaje.getContenido());
             dataToSend.put("Tipo", mensaje.getTipo());
             dataToSend.put("codCifrado", mensaje.getCodCifrado());
+            dataToSend.put("nombreArchivo", mensaje.getCodCifrado());
 
 
             //Initialize and config request, then connect to server.

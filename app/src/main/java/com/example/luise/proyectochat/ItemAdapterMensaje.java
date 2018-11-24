@@ -27,13 +27,19 @@ public class ItemAdapterMensaje extends ArrayAdapter {
         LayoutInflater inflater = LayoutInflater.from(activity);
         View item = inflater.inflate(R.layout.activity_chat_item, null);
 
-
+    if(listaMensaje.get(position).getTipo().equals("archivo")){
+        TextView nombre = (TextView) item.findViewById(R.id.txtUsuario);
+        nombre.setText(listaMensaje.get(position).getNombreArchivo());
+    }
+    else{
         // Recogemos el TextView para mostrar el nombre y establecemos el
         // nombre.
         TextView nombre = (TextView) item.findViewById(R.id.txtUsuario);
         nombre.setText(listaMensaje.get(position).getEmisor());
         TextView mensaje = (TextView) item.findViewById(R.id.txtContenidoM);
         mensaje.setText(listaMensaje.get(position).getContenido());
+    }
+
         // Devolvemos la vista para que se muestre en el ListView.
         return item;
     }

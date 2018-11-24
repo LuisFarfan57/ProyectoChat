@@ -52,6 +52,7 @@ public class ChatIndividual extends AppCompatActivity {
             case R.id.btnEnviar:
                 String tipo;
                 String contenido="";
+                String nombreArchivo="";
                 if(ArchivoCargado){
                    tipo="archivo";
                    try{
@@ -59,6 +60,7 @@ public class ChatIndividual extends AppCompatActivity {
                    }catch (Exception e){
 
                    }
+                   nombreArchivo="";
                 }
                 else{
                     txtMensaje.setEnabled(true);
@@ -74,6 +76,7 @@ public class ChatIndividual extends AppCompatActivity {
                     //primero muestra el mensaje en listview
                     if(!ArchivoCargado){
                         message.setCodCifrado(Contantes.CodigoCifradoActual);
+                        message.setNombreArchivo(nombreArchivo);
                         mensajesTemporal.add(message);
                         adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
                         listChat.setAdapter(adapter);
@@ -84,6 +87,7 @@ public class ChatIndividual extends AppCompatActivity {
                     }
 
                     enviar.mensaje=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,txtMensaje.getText().toString(),tipo);
+                    enviar.mensaje.setNombreArchivo(nombreArchivo);
                     enviar.mensaje.setCodCifrado(Contantes.CodigoCifradoActual);
                     enviar.mensaje.setContenido(cifrar.Cifrar(contenido,Contantes.CodigoCifradoActual));
                     enviar.setContexto(ChatIndividual.this);

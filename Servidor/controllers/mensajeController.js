@@ -11,7 +11,8 @@ exports.mensaje_enviar = function (req, res) {
             Receptor: req.body.Receptor,
             Contenido: req.body.Contenido,
             Tipo: req.body.Tipo,
-            codCifrado: req.body.codCifrado
+            codCifrado: req.body.codCifrado,
+            nombreArchivo: req.body.nombreArchivo
         }
     );
 

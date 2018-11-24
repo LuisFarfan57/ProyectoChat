@@ -6,7 +6,8 @@ let MensajeSchema = new Schema({
     Receptor: {type:String, required: true},
     Contenido: {type: String, required: true},
     Tipo: {type:String},
-    codCifrado: {type:Number}
+    codCifrado: {type:Number},
+    nombreArchivo: {type:String}
 });
 
 
