@@ -17,21 +17,17 @@ public class LZW {
     String textoBinario;
     String textoDecodificado;
     String[] tablaAscii;
-    Uri datosArchivo;
-    Application app2;
 
-    LZW (Application app, Uri archivo)throws IOException {
-        app2 = app;
-        Cadena = Lector.LeerArchivo(app, archivo);
+    LZW (String archivo)throws IOException {
+        Cadena = archivo;
         textoCodificado = "";
         textoDecodificado = "";
         textoBinario = "";
-        datosArchivo=archivo;
         cerosExtraTodo = 0;
         cerosTabla = 0;
     }
 
-    public boolean Comprimir(){
+    public String Comprimir(){
         try{
             GenerarTablaInicial(Cadena);
             LZWCompresion(0,Cadena);
@@ -39,9 +35,10 @@ public class LZW {
             GenerarBinarioCompleto();
             BinarioAscii();
 
-            return true;
+            return GenerarArchivosCompresion();
+
         }catch(Exception e){
-            return false;
+            return "ERROR";
         }
     }
 
@@ -172,7 +169,7 @@ public class LZW {
         }
     }
 
-    public boolean GenerarArchivosCompresion(Uri uri){
+    public String GenerarArchivosCompresion(){
         String ArchivoLZW = "";
         for (int i = 0; i < tablaInicial.size(); i++) {
             ArchivoLZW += tablaInicial.get(i);
@@ -182,16 +179,10 @@ public class LZW {
             }
         }
 
-        ArchivoLZW += "~&" + cerosExtraTodo + "~&" +  cerosTabla + "~&" + textoCodificado;
-        if(Escritor.Escribir(uri,app2,ArchivoLZW)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return ArchivoLZW += "~&" + cerosExtraTodo + "~&" +  cerosTabla + "~&" + textoCodificado;
     }
 
-    public boolean Descomprimir(){
+    public String Descomprimir(){
         try{
             tablaAscii = Cadena.split("~&");
             LeerTablaInicial(tablaAscii[0]);
@@ -201,9 +192,9 @@ public class LZW {
             GenerarTablaNumeros();
             DescompresionLZW();
 
-            return true;
+            return GenerarArchivosDescompresion();
         }catch (Exception e){
-            return false;
+            return "ERROR";
         }
     }
 
@@ -274,13 +265,8 @@ public class LZW {
         }
     }
 
-    public boolean GenerarArchivosDescompresion(Uri uri){
-        if(Escritor.Escribir(uri,app2,textoDecodificado)){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public String GenerarArchivosDescompresion(){
+        return textoDecodificado;
     }
 
 }

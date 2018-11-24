@@ -131,7 +131,7 @@ public class ChatIndividual extends AppCompatActivity {
 
     //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @OnClick({R.id.btnEnviar, R.id.btnActualizar, R.id.btnArchivo, R.id.btnBuscar})
-    public void onViewClicked(View view){
+    public void onViewClicked(View view) throws IOException {
         switch (view.getId()) {
             case R.id.btnBuscar:
                 mensaje=new GetRequestMensaje();
@@ -206,6 +206,11 @@ public class ChatIndividual extends AppCompatActivity {
                         mensajesTemporal.add(message);
                     }
                     else{
+                        if(nombreArchivo.contains(".txt")){
+                            LZW lzw = new LZW(contenido);
+
+                            message.setContenido(lzw.Comprimir());
+                        }
                         message.setNombreArchivo(nombreArchivo);
                         mensajesTemporal.add(message);
                     }

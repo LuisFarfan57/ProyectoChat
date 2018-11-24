@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -37,7 +39,7 @@ public class Opciones extends AppCompatActivity {
     }
 
     @OnClick({R.id.btnEliminar, R.id.btnDescargar})
-    public void onViewClicked(View view) {
+    public void onViewClicked(View view) throws IOException {
         switch (view.getId()) {
             case R.id.btnEliminar:
                 DeleteRequest eliminar=new DeleteRequest();
@@ -47,6 +49,11 @@ public class Opciones extends AppCompatActivity {
                 startActivity(intent3);
                 break;
             case R.id.btnDescargar:
+                if(nombreArchivo.contains(".txt")){
+                    LZW lzw = new LZW(contenido);
+
+                    contenido = lzw.Descomprimir();
+                }
                 ElegirRutaDescarga();
                 break;
         }
