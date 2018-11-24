@@ -67,7 +67,7 @@ public class ChatIndividual extends AppCompatActivity {
                 mensaje=new GetRequestMensaje();
                 mensaje.setContexto(ChatIndividual.this);
                 try{
-                    mensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
+                    mensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
                 }catch(Exception e){
 
                     Toast.makeText(ChatIndividual.this,"Vuelva a interntalo en un momento", Toast.LENGTH_SHORT).show();
@@ -83,6 +83,8 @@ public class ChatIndividual extends AppCompatActivity {
 
                         com.example.luise.proyectochat.Opciones.idMensaje=itemval.get_id();
                         com.example.luise.proyectochat.Opciones.tipoMensaje=itemval.getTipo();
+                        Opciones.contenido = itemval.getContenido();
+                        Opciones.nombreArchivo = itemval.getNombreArchivo();
 
 
                 Intent Opciones = new Intent(getApplicationContext(), Opciones.class);
@@ -127,15 +129,15 @@ public class ChatIndividual extends AppCompatActivity {
         return item;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    //@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @OnClick({R.id.btnEnviar, R.id.btnActualizar, R.id.btnArchivo, R.id.btnBuscar})
-    public void onViewClicked(View view) throws IOException {
+    public void onViewClicked(View view){
         switch (view.getId()) {
             case R.id.btnBuscar:
                 mensaje=new GetRequestMensaje();
                 mensaje.setContexto(ChatIndividual.this);
                 try{
-                    mensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
+                    mensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
                 }catch(Exception e){
 
                     Toast.makeText(ChatIndividual.this,"Vuelva a interntalo en un momento", Toast.LENGTH_SHORT).show();
@@ -210,7 +212,7 @@ public class ChatIndividual extends AppCompatActivity {
 
                     enviar.mensaje=message;
                     enviar.setContexto(ChatIndividual.this);
-                    enviar.execute("http://192.168.1.8:1234/mensajes/enviar");
+                    enviar.execute("http://192.168.0.13:1234/mensajes/enviar");
                     txtMensaje.setText("");
                     ArchivoCargado = false;
                     adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
@@ -235,7 +237,7 @@ public class ChatIndividual extends AppCompatActivity {
         mensaje=new GetRequestMensaje();
         mensaje.setContexto(ChatIndividual.this);
         try{
-            mensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
+            mensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
         }catch(Exception e){
 
             Toast.makeText(ChatIndividual.this,"Vuelva a interntalo en un momento", Toast.LENGTH_SHORT).show();

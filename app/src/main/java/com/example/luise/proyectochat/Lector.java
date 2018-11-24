@@ -31,7 +31,6 @@ public class Lector {
         return SB.toString();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static String obtenerNombreDeArchivoDeUri(Application application, Uri uri) {
         String displayName = "";
         Cursor cursor = application.getApplicationContext().getContentResolver().query(uri, null, null, null, null, null);
