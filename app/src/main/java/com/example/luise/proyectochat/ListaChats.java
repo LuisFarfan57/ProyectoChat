@@ -28,9 +28,9 @@ public class ListaChats extends AppCompatActivity  {
 
 
                 getMensaje.setContexto(ListaChats.this);
-                getMensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
+                getMensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
                 getUser.setContexto(ListaChats.this);
-                getUser.execute("http://192.168.0.13:1234/usuarios/getusuarios");
+                getUser.execute("http://192.168.1.8:1234/usuarios/getusuarios");
 
         while(!getUser.procesoTerminado){
             int nada=0;

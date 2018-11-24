@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         requestToken.setContexto(SplashActivity.this);
         requestToken.VerificarToken=true;
         requestToken.token=datos[1];
-        requestToken.execute("http://192.168.0.13:1234/usuarios/private");
+        requestToken.execute("http://192.168.1.8:1234/usuarios/private");
         while (!requestToken.procesoTerminado){
             int num=0;
         }

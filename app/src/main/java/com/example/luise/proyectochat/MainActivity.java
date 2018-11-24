@@ -1,10 +1,15 @@
 package com.example.luise.proyectochat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.ArrayRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         nuevaRequest=new GetRequest();
         setContentView(R.layout.activity_main);
         nuevaRequest.setContexto(MainActivity.this);
-        nuevaRequest.execute("http://192.168.0.13:1234/usuarios/getusuarios");
+        nuevaRequest.execute("http://192.168.1.8:1234/usuarios/getusuarios");
         ButterKnife.bind(this);
     }
 
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                    RequestToken=new PostRequest();
                    RequestToken.Token=true;
                    RequestToken.setContexto(MainActivity.this);
-                   RequestToken.execute("http://192.168.0.13:1234/usuarios/signin");
+                   RequestToken.execute("http://192.168.1.8:1234/usuarios/signin");
                    while(!RequestToken.procesoTerminado){
                        int espera=+1;
                    }
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
 
 }
