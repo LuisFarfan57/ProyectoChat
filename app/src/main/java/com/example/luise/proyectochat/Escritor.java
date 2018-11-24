@@ -1,9 +1,11 @@
 package com.example.luise.proyectochat;
 
 import android.app.Application;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,5 +33,17 @@ public class Escritor {
         }catch(Exception e){
             return false;
         }
+    }
+    public static void EscribirToken(String nombre, Context contexto,String contenido){
+        try {
+            OutputStreamWriter fout= new OutputStreamWriter(contexto.openFileOutput(nombre, Context.MODE_PRIVATE));
+            fout.write(contenido);
+            fout.close();
+        }
+        catch (Exception ex)
+        {
+            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+        }
+
     }
 }

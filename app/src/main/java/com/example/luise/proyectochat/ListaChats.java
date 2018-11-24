@@ -19,17 +19,21 @@ public class ListaChats extends AppCompatActivity  {
     ListView listChats;
     ItemAdapter adapter;
     public static GetRequestMensaje getMensaje=new GetRequestMensaje();
+    public static  GetRequest getUser=new GetRequest();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+
                 getMensaje.setContexto(ListaChats.this);
                 getMensaje.execute("http://192.168.1.8:1234/mensajes/allmensajes");
-            }
-        }, 1000);
+                getUser.setContexto(ListaChats.this);
+                getUser.execute("http://192.168.1.8:1234/usuarios/getusuarios");
+
+        while(!getUser.procesoTerminado){
+            int nada=0;
+        }
+        Contantes.listaChats=getUser.listaUsuarios;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_chats);
         ButterKnife.bind(this);

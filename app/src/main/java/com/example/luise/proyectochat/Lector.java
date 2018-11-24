@@ -1,9 +1,13 @@
 package com.example.luise.proyectochat;
 
 import android.app.Application;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.OpenableColumns;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,6 +31,7 @@ public class Lector {
         return SB.toString();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static String obtenerNombreDeArchivoDeUri(Application application, Uri uri) {
         String displayName = "";
         Cursor cursor = application.getApplicationContext().getContentResolver().query(uri, null, null, null, null, null);
@@ -43,5 +48,19 @@ public class Lector {
             cursor.close();
         }
         return displayName;
+    }
+    public static String leerToken(String nombre,Context contexto){
+        try{
+            BufferedReader fin = new BufferedReader(new InputStreamReader(contexto.openFileInput(nombre)));
+            String texto = fin.readLine();
+            fin.close();
+            return texto;
+        }
+        catch (Exception ex)
+        {
+
+            Log.e("Ficheros", "Error al leer fichero desde memoria interna");
+            return "Error,Error";
+        }
     }
 }

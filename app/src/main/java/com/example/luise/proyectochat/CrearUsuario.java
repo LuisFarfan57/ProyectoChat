@@ -38,9 +38,10 @@ public class CrearUsuario extends AppCompatActivity {
     EditText txtUsuario;
     @BindView(R.id.txtContraseña)
     EditText txtClave;
-    GetRequest RequestGet=new GetRequest();
+    GetRequest RequestGet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        RequestGet=new GetRequest();
         RequestGet.setContexto(CrearUsuario.this);
         RequestGet.execute("http://192.168.0.13:1234/usuarios/getusuarios");
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class CrearUsuario extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btnCrear:
                 Date fecha=new Date();
-                Usuario usuarioNuevo=new Usuario(txtNombre.getText().toString(),txtApellido.getText().toString(),txtCorreo.getText().toString(),txtUsuario.getText().toString(),txtClave.getText().toString());
+                Usuario usuarioNuevo=new Usuario(txtNombre.getText().toString(),txtApellido.getText().toString(),txtCorreo.getText().toString(),txtUsuario.getText().toString(),Verificacion.getMD5(txtClave.getText().toString()));
                 if(txtNombre.getText().equals("")||txtApellido.getText().equals("")||txtClave.getText().equals("")||txtCorreo.getText().equals("")||txtUsuario.getText().equals("")){
                     Toast.makeText(CrearUsuario.this,"No puede dejar ningun campo vacio", Toast.LENGTH_SHORT).show();
 

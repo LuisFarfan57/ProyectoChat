@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.textView5)
     TextView textView5;
  GetRequest nuevaRequest;
+    PostRequest RequestToken;
 
 
     @Override
@@ -64,10 +66,20 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btnIngresar:
                 String usuario=txtUsuario.getText().toString();
-                String contraseña=txtcontraseña.getText().toString();
-                Contantes.listaChats.addAll(nuevaRequest.listaUsuarios);
+                String contraseña=Verificacion.getMD5(txtcontraseña.getText().toString());
                if(Verificacion.VerificarUsuario(usuario,contraseña,nuevaRequest.listaUsuarios)){
+                   RequestToken=new PostRequest();
+                   RequestToken.Token=true;
+                   RequestToken.setContexto(MainActivity.this);
+                   RequestToken.execute("http://192.168.1.8:1234/usuarios/signin");
+                   while(!RequestToken.procesoTerminado){
+                       int espera=+1;
+                   }
                     Contantes.usuarioenSesion=usuario;
+                    Gson deserializar=new Gson();
+                    Token tok=deserializar.fromJson(RequestToken.retorno,Token.class);
+                    String DatoEscribir=Contantes.usuarioenSesion+","+tok.token;
+                    Escritor.EscribirToken("usuarioinfo",MainActivity.this,DatoEscribir);
                   Intent SalaChat = new Intent(getApplicationContext(), ListaChats.class);
                    startActivity(SalaChat);
                }else{
@@ -83,4 +95,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+}
+class Token{
+    @SerializedName("token")
+    public String token="";
 }

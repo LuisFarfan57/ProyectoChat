@@ -22,6 +22,7 @@ public class GetRequest extends AsyncTask<String,Void,String>{
     ProgressDialog progressDialog;
     public Context contexto;
     public ArrayList<Usuario> listaUsuarios;
+    boolean procesoTerminado=false;
 
     public void setContexto(Context c){
         contexto=c;
@@ -43,6 +44,7 @@ public class GetRequest extends AsyncTask<String,Void,String>{
             Type tipoListaUsuarios = new TypeToken<ArrayList<Usuario>>(){}.getType();
             Gson gson = new Gson();
             listaUsuarios= gson.fromJson(Resultado, tipoListaUsuarios);
+            procesoTerminado=true;
             return Resultado;
         } catch (IOException ex) {
             return "Network error !";

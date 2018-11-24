@@ -21,10 +21,13 @@ import java.net.URL;
 public class PostRequest extends AsyncTask<String, Void, String>{
 
     public Usuario user=new Usuario("","","","","");
+    String token="";
     String retorno="";
-    String path;
     ProgressDialog progressDialog;
     public Context contexto;
+    public boolean Token=false;
+    public boolean VerificarToken=false;
+    public boolean procesoTerminado=false;
 
     public void setContexto(Context c){
         contexto=c;
@@ -42,12 +45,15 @@ public class PostRequest extends AsyncTask<String, Void, String>{
     protected String doInBackground(String... strings) {
         try {
             retorno=postData(strings[0]);
+            procesoTerminado=true;
             return retorno;
 
         } catch (IOException ex) {
+            procesoTerminado=true;
             retorno="Network error !";
             return "Network error !";
         } catch (JSONException ex) {
+            procesoTerminado=true;
             retorno="Data Invalid";
             return "Data Invalid !";
         }
@@ -72,12 +78,22 @@ public class PostRequest extends AsyncTask<String, Void, String>{
         try {
             //Create data to send to server
             JSONObject dataToSend = new JSONObject();
+            if(Token){
+                dataToSend.put("usuario", user.getUsuario());
+            }
+            else if(VerificarToken){
+                dataToSend.put("Autorizacion", token);
+            }
+            else{
+
                 //post usuario
                 dataToSend.put("nombre", user.getNombre());
                 dataToSend.put("apellido", user.getApellido());
                 dataToSend.put("correo", user.getCorreo());
                 dataToSend.put("usuario", user.getUsuario());
                 dataToSend.put("password", user.getContraseña());
+            }
+
 
 
             //Initialize and config request, then connect to server.
