@@ -1,5 +1,7 @@
 package com.example.luise.proyectochat;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,8 @@ public class ChatIndividual extends AppCompatActivity {
     ArrayList<Mensaje> mensajesTemporal=new ArrayList<>();
     boolean ArchivoCargado;
 
+    Uri uri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //txtUsuarioReceptor.setText(Contantes.usuarioConversacion);
@@ -50,29 +54,43 @@ public class ChatIndividual extends AppCompatActivity {
                 String contenido="";
                 if(ArchivoCargado){
                    tipo="archivo";
-                   //poner el contenido del archivo ya comprimido
-                   contenido="";
+                   try{
+                       contenido = Lector.LeerArchivo(this.getApplication(), uri);
+                   }catch (Exception e){
+
+                   }
                 }
                 else{
                     txtMensaje.setEnabled(true);
                     tipo="normal";
                     contenido=txtMensaje.getText().toString();
                 }
-                //primero muestra el mensaje en listview
-                Mensaje message=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,contenido,tipo);
-                enviar=new PostRequestMensaje();
-              message.setCodCifrado(Contantes.CodigoCifradoActual);
-                Toast.makeText(ChatIndividual.this,"Mensaje Enviado", Toast.LENGTH_SHORT).show();
-                mensajesTemporal.add(message);
-                adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
-                listChat.setAdapter(adapter);
-                //despues envia el mensaje a la base de datos
-                enviar.mensaje=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,txtMensaje.getText().toString(),tipo);
-                enviar.mensaje.setCodCifrado(Contantes.CodigoCifradoActual);
-                enviar.mensaje.setContenido(cifrar.Cifrar(contenido,Contantes.CodigoCifradoActual));
-                enviar.setContexto(ChatIndividual.this);
-                enviar.execute("http://192.168.1.8:1234/mensajes/enviar");
-                txtMensaje.setText("");
+
+                if(contenido != ""){
+                    Mensaje message=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,contenido,tipo);
+                    enviar=new PostRequestMensaje();
+                    Toast.makeText(ChatIndividual.this,"Mensaje Enviado", Toast.LENGTH_SHORT).show();
+
+                    //primero muestra el mensaje en listview
+                    if(!ArchivoCargado){
+                        message.setCodCifrado(Contantes.CodigoCifradoActual);
+                        mensajesTemporal.add(message);
+                        adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
+                        listChat.setAdapter(adapter);
+                        //despues envia el mensaje a la base de datos
+                    }
+                    else{
+
+                    }
+
+                    enviar.mensaje=new Mensaje(Contantes.usuarioenSesion,Contantes.usuarioConversacion,txtMensaje.getText().toString(),tipo);
+                    enviar.mensaje.setCodCifrado(Contantes.CodigoCifradoActual);
+                    enviar.mensaje.setContenido(cifrar.Cifrar(contenido,Contantes.CodigoCifradoActual));
+                    enviar.setContexto(ChatIndividual.this);
+                    enviar.execute("http://192.168.1.8:1234/mensajes/enviar");
+                    txtMensaje.setText("");
+                    ArchivoCargado = false;
+                }
                 break;
             case R.id.btnActualizar:
                        mensaje=new GetRequestMensaje();
@@ -110,8 +128,32 @@ public class ChatIndividual extends AppCompatActivity {
                 break;
             case R.id.btnArchivo:
                 //codido para cargar archivo y obtener contenido
-                ArchivoCargado=true;
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("*/*");
+                startActivityForResult(Intent.createChooser(intent, "Choose File"), 0);
+
                 txtMensaje.setEnabled(false);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case 0:
+                try{
+                    super.onActivityResult(requestCode, resultCode, data);
+                    if (resultCode == RESULT_CANCELED) {
+                        //Cancelado por el usuario
+                    }if ((resultCode == RESULT_OK) && (requestCode == 0)) {
+                        //Procesar el resultado
+
+                        uri = data.getData(); //obtener el uri content
+                        ArchivoCargado=true;
+                    }
+                }catch(Exception e){
+                    Toast.makeText(this.getApplicationContext(), "Error al cargar el archivo", Toast.LENGTH_LONG).show();
+                }
                 break;
         }
     }
