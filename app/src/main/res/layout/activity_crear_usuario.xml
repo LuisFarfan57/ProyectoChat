@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CrearUsuario">
@@ -11,82 +12,90 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:text="Crear Usuario" />
+        android:layout_alignStart="@+id/btnRegresar"
+        android:layout_marginTop="15dp"
+        android:text="Crear Usuario"
+        android:layout_alignLeft="@+id/btnRegresar" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView8"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="84dp"
-        android:text="Nombre" />
+        android:layout_marginTop="72dp"
+        android:text="Nombre"
+        android:layout_alignRight="@+id/textView8" />
 
     <TextView
         android:id="@+id/TextView3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="33dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginTop="148dp"
-        android:text="Apellido" />
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="109dp"
+        android:text="Apellido"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="26dp" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginTop="198dp"
-        android:text="Correo" />
+        android:layout_height="33dp"
+        android:layout_alignBottom="@+id/txtCorreo"
+        android:layout_alignEnd="@+id/TextView3"
+        android:text="Correo"
+        android:layout_alignRight="@+id/TextView3" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginBottom="234dp"
-        android:text="Usuario" />
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="228dp"
+        android:text="Usuario"
+        android:layout_alignRight="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView6"
-        android:layout_marginBottom="185dp"
-        android:text="Contraseña" />
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_alignTop="@+id/txtContraseña"
+        android:text="Contraseña"
+        android:layout_alignRight="@+id/textView6" />
 
     <Button
         android:id="@+id/btnCrear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="84dp"
-        android:text="Crear Usuario" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="101dp"
+        android:layout_marginStart="114dp"
+        android:text="Crear Usuario"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="114dp" />
 
     <EditText
         android:id="@+id/txtNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="67dp"
-        android:layout_toEndOf="@+id/textView10"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_toEndOf="@+id/textView6"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:layout_toRightOf="@+id/textView6" />
 
     <EditText
         android:id="@+id/txtApellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="130dp"
-        android:layout_toEndOf="@+id/textView10"
+        android:layout_above="@+id/TextView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-148dp"
         android:ems="10"
         android:inputType="textPersonName" />
 
@@ -95,27 +104,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="189dp"
-        android:layout_toEndOf="@+id/textView10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="164dp"
         android:ems="10"
         android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/txtUsuario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textView10"
-        android:ems="10"
-        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txtContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="175dp"
-        android:layout_toEndOf="@+id/textView10"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="187dp"
         android:ems="10"
         android:inputType="textPassword" />
 
@@ -124,8 +124,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="44dp"
+        android:layout_marginStart="130dp"
+        android:text="Regresar"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="130dp" />
+
+    <EditText
+        android:id="@+id/txtUsuario"
+        android:layout_width="213dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp"
-        android:text="Regresar" />
+        android:layout_marginTop="220dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

@@ -63,4 +63,13 @@ public class Verificacion {
             throw new RuntimeException(e);
         }
     }
+    public static String EncontrarUsuario(String usuario,List<Usuario> lista){
+        String id="";
+        for (int i=0;i<lista.size();i++){
+            if(lista.get(i).getUsuario().equals(usuario)){
+                id=lista.get(i).get_id();
+            }
+        }
+            return id;
+    }
 }

@@ -9,6 +9,22 @@ import java.util.Date;
 
 public class Usuario {
 
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @SerializedName("_id")
     private String _id;
     @SerializedName("nombre")

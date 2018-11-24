@@ -40,10 +40,16 @@ function usuarioIndividual_contenido (req, res) {
       res.send(usuario);
   })
 };
-
+function usuario_eliminar (req, res) {
+  User.findByIdAndRemove(req.params.id, function (err) {
+    if (err) return next(err);
+    res.send('Deleted successfully!');
+})
+};
 module.exports = {
   signUp,
   signIn,
   usuarios_contenido,
-  usuarioIndividual_contenido
+  usuarioIndividual_contenido,
+  usuario_eliminar
 }

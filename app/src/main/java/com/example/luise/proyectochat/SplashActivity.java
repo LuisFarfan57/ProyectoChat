@@ -11,12 +11,13 @@ public class SplashActivity extends AppCompatActivity {
 
     public PostRequest requestToken;
     Token tok;
+    String datos[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-       String datos[]= Lector.leerToken("usuarioinfo",SplashActivity.this).split(",");
+       datos= Lector.leerToken("usuarioinfo",SplashActivity.this).split(",");
         requestToken=new PostRequest();
         requestToken.setContexto(SplashActivity.this);
         requestToken.VerificarToken=true;
@@ -33,6 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 finish();
                 if(tok.token.equals("Tienes autorizacion")){
+                    Contantes.usuarioenSesion=datos[0];
                     Intent SalaChat = new Intent(getApplicationContext(), ListaChats.class);
                     startActivity(SalaChat);
                 }

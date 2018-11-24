@@ -97,10 +97,26 @@ public class ListaChats extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.Eliminar:
-
+                DeleteRequest eliminar=new DeleteRequest();
+                GetRequest obtenerUsuarios=new GetRequest();
+                obtenerUsuarios.setContexto(ListaChats.this);
+                obtenerUsuarios.execute("http://192.168.1.8:1234/usuarios/getusuarios");
+                int ContEspera=0;
+                while (!obtenerUsuarios.procesoTerminado){
+                    //espera que termine peticion
+                    ContEspera++;
+                }
+                String idEliminar=Verificacion.EncontrarUsuario(Contantes.usuarioenSesion,obtenerUsuarios.listaUsuarios);
+                eliminar.setContexto(ListaChats.this);
+                eliminar.execute("http://192.168.1.8:1234/usuarios/eliminar/"+idEliminar);
+                Escritor.EscribirToken("usuarioinfo",ListaChats.this,"Vacio,Vacio");
+                Intent intent3 = new Intent(ListaChats.this, MainActivity.class);
+                startActivity(intent3);
                 return true;
             case R.id.CerrarSesion:
-
+                Escritor.EscribirToken("usuarioinfo",ListaChats.this,"Vacio,Vacio");
+                Intent intent2 = new Intent(ListaChats.this, MainActivity.class);
+                startActivity(intent2);
                 return true;
             case R.id.Salir:
                 finish();
