@@ -25,6 +25,8 @@ public class ChatIndividual extends AppCompatActivity {
 
     @BindView(R.id.txtUsuarioReceptor)
     TextView txtUsuarioReceptor;
+    @BindView(R.id.txtBuscar)
+    TextView txtBuscar;
     @BindView(R.id.txtMensaje)
     EditText txtMensaje;
     List<Mensaje> actualConversacion = new ArrayList<>();
@@ -49,9 +51,51 @@ public class ChatIndividual extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @OnClick({R.id.btnEnviar, R.id.btnActualizar, R.id.btnArchivo})
+    @OnClick({R.id.btnEnviar, R.id.btnActualizar, R.id.btnArchivo, R.id.btnBuscar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btnBuscar:
+                mensaje=new GetRequestMensaje();
+                mensaje.setContexto(ChatIndividual.this);
+                try{
+                    mensaje.execute("http://192.168.0.13:1234/mensajes/allmensajes");
+                }catch(Exception e){
+
+                    Toast.makeText(ChatIndividual.this,"Vuelva a interntalo en un momento", Toast.LENGTH_SHORT).show();
+                }
+                int contCiclos=0;
+
+                while (!mensaje.procesoTerminado){
+
+                    //Esperando que Inicie la peticiones
+                    contCiclos++;
+                }
+
+                if(adapter!=null){
+                    adapter.clear();
+                    adapter.notifyDataSetChanged();
+                }
+                if(mensaje.listaMensajes!=null){
+                    for (int i=0;i<mensaje.listaMensajes.size();i++){
+                        if ((mensaje.listaMensajes.get(i).getEmisor().equals(Contantes.usuarioenSesion) && mensaje.listaMensajes.get(i).getReceptor().equals(Contantes.usuarioConversacion)) || (mensaje.listaMensajes.get(i).getEmisor().equals(Contantes.usuarioConversacion) && mensaje.listaMensajes.get(i).getReceptor().equals(Contantes.usuarioenSesion))) {
+                            if(mensaje.listaMensajes.get(i).getTipo().equals("normal")){
+                                mensaje.listaMensajes.get(i).setContenido(cifrar.Descifrar(mensaje.listaMensajes.get(i).getContenido(),Contantes.CodigoCifradoActual));
+                                if(mensaje.listaMensajes.get(i).getContenido().contains(txtBuscar.getText().toString())){
+                                    actualConversacion.add(mensaje.listaMensajes.get(i));
+                                }
+                            }
+                            else{
+                                if(mensaje.listaMensajes.get(i).getNombreArchivo().contains(txtBuscar.getText().toString())){
+                                    actualConversacion.add(mensaje.listaMensajes.get(i));
+                                }
+                            }
+                        }
+                    }
+
+                }
+                adapter = new ItemAdapterMensaje(ChatIndividual.this, actualConversacion);
+                listChat.setAdapter(adapter);
+                break;
             case R.id.btnEnviar:
                 String tipo;
                 String contenido="";
@@ -84,6 +128,7 @@ public class ChatIndividual extends AppCompatActivity {
                     }
                     else{
                         message.setNombreArchivo(nombreArchivo);
+                        mensajesTemporal.add(message);
                     }
 
                     enviar.mensaje=message;
@@ -91,7 +136,8 @@ public class ChatIndividual extends AppCompatActivity {
                     enviar.execute("http://192.168.0.13:1234/mensajes/enviar");
                     txtMensaje.setText("");
                     ArchivoCargado = false;
-                    Actualizar();
+                    adapter = new ItemAdapterMensaje(ChatIndividual.this, mensajesTemporal);
+                    listChat.setAdapter(adapter);
                 }
                 break;
             case R.id.btnActualizar:
@@ -141,6 +187,7 @@ public class ChatIndividual extends AppCompatActivity {
             }
 
         }
+
         adapter = new ItemAdapterMensaje(ChatIndividual.this, actualConversacion);
         listChat.setAdapter(adapter);
     }
